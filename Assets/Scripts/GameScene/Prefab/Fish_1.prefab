@@ -49,9 +49,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
+      propertyPath: m_Size.x
+      value: 1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
+      propertyPath: m_Size.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7562406786100303442, guid: 55334c24e43764b04b5b59930705e482, type: 3}
+      objectReference: {fileID: 21300000, guid: 55334c24e43764b04b5b59930705e482, type: 3}
+    - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9049580138240540244, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Name
       value: Fish_1

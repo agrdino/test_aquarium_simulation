@@ -1,4 +1,5 @@
-﻿using Scripts.Helper;
+﻿using System.Collections.Generic;
+using Scripts.Helper;
 using UnityEngine;
 
 namespace Config
@@ -12,12 +13,19 @@ namespace Config
 
         [Space] 
         [SerializeField] private int _startCoin;
+        [SerializeField] private int _startFish;
         
         public int StartCoin => _startCoin;
+        public int StartFish => _startFish;
         
         public FishConfig GetFishConfig(int fishID)
         {
             return _fishConfigs[fishID];
+        }
+
+        public List<FishConfig> GetFishConfigs()
+        {
+            return _fishConfigs.GetFishConfigs();
         }
 
         public DecorConfig GetDecorConfig(int decorID)

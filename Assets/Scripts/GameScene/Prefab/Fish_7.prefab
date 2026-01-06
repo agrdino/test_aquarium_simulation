@@ -50,23 +50,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Size.x
-      value: 1.38
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Size.y
-      value: 0.98
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 03e1bbc80511b465d92eb33e7f0c9e25, type: 3}
+      objectReference: {fileID: 21300000, guid: 3b3a79870fe304d9dad639e789be8915, type: 3}
     - target: {fileID: 3143927845097537993, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9049580138240540244, guid: da2216ad9350d934db256b22fef42493, type: 3}
       propertyPath: m_Name
-      value: Fish_2
+      value: Fish_7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

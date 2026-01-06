@@ -15,19 +15,73 @@ MonoBehaviour:
   _fishConfigs:
   - _id: 1
     _name: Fish_1
+    _avatar: {fileID: 21300000, guid: 55334c24e43764b04b5b59930705e482, type: 3}
     _prefab: {fileID: 2360905915156334411, guid: 469884d1ab896874aa7020535702193c, type: 3}
     _unlockLevel: 1
-    _price: 100
+    _price: 15
     _exp: 100
+    _incomeInterval: 5
+    _income: 5
   - _id: 2
     _name: Fish_2
+    _avatar: {fileID: 21300000, guid: 03e1bbc80511b465d92eb33e7f0c9e25, type: 3}
     _prefab: {fileID: 2360905915156334411, guid: 53f86a11f3bdb644bb73813e8396b654, type: 3}
     _unlockLevel: 1
-    _price: 200
-    _exp: 200
+    _price: 15
+    _exp: 100
+    _incomeInterval: 7.5
+    _income: 10
   - _id: 3
     _name: Fish_3
+    _avatar: {fileID: 21300000, guid: 76d3d2d87846d47d789146b2c1e3223c, type: 3}
     _prefab: {fileID: 2360905915156334411, guid: 9931a2f16f7bcd9489d5ab8c5701a529, type: 3}
+    _unlockLevel: 1
+    _price: 30
+    _exp: 100
+    _incomeInterval: 10
+    _income: 30
+  - _id: 4
+    _name: Fish_4
+    _avatar: {fileID: 21300000, guid: 7247c6469fe494d56931cdf32ae0e732, type: 3}
+    _prefab: {fileID: 2360905915156334411, guid: 8eaa1eb379ffc419c9a62a125058d117, type: 3}
+    _unlockLevel: 1
+    _price: 15
+    _exp: 100
+    _incomeInterval: 20
+    _income: 100
+  - _id: 5
+    _name: Fish_5
+    _avatar: {fileID: 21300000, guid: 1f5895ebced6d4268bccfac8de0e3761, type: 3}
+    _prefab: {fileID: 2360905915156334411, guid: 40ec068d9d9d143088da14c4101738c1, type: 3}
     _unlockLevel: 2
-    _price: 300
-    _exp: 300
+    _price: 15
+    _exp: 100
+    _incomeInterval: 20
+    _income: 150
+  - _id: 6
+    _name: Fish_6
+    _avatar: {fileID: 21300000, guid: 9025c8a55872b48aca4317639b2fc5e6, type: 3}
+    _prefab: {fileID: 2360905915156334411, guid: 1afd27739f39f4448a1f9321b94b9ee8, type: 3}
+    _unlockLevel: 2
+    _price: 15
+    _exp: 100
+    _incomeInterval: 20
+    _income: 200
+  - _id: 7
+    _name: Fish_7
+    _avatar: {fileID: 21300000, guid: 3b3a79870fe304d9dad639e789be8915, type: 3}
+    _prefab: {fileID: 2360905915156334411, guid: 64ac6a5ece51848fc8004ddcc9555311, type: 3}
+    _unlockLevel: 3
+    _price: 15
+    _exp: 100
+    _incomeInterval: 20
+    _income: 200
+  - _id: 8
+    _name: Fish_8
+    _avatar: {fileID: 21300000, guid: d882974709df44257999d45802bc7f30, type: 3}
+    _prefab: {fileID: 2360905915156334411, guid: 7a2e0397dc64140ac98493c98f888cfb, type: 3}
+    _unlockLevel: 3
+    _price: 15
+    _exp: 100
+    _incomeInterval: 30
+    _income: 300

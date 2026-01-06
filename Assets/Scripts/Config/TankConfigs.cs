@@ -16,5 +16,7 @@ namespace Config
     {
         public int width;
         public int tankCapacity;
+        public int levelUpCost;
+        public int maxLevel;
     }
 }

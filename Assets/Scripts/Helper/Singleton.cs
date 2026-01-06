@@ -7,7 +7,7 @@ namespace Scripts.Helper
         private static T _instance;
         public static T Instance => _instance;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _instance = this as T;
         }

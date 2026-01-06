@@ -17,3 +17,9 @@ MonoBehaviour:
     _targetExp: 150
   - _level: 2
     _targetExp: 300
+  - _level: 3
+    _targetExp: 500
+  - _level: 4
+    _targetExp: 1000
+  - _level: 5
+    _targetExp: 2000

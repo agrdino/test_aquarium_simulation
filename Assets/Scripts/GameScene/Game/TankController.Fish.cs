@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Config;
+using Data;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -11,40 +13,66 @@ namespace GameScene.Game
     public partial class TankController
     {
         public const float MaxDistanceCanMoveInOneSecond = 0.5f;
+        public const int RandomFishCost = 10;
         
         private List<Fish> _fishes = new();
         private NativeList<FishMoveData> _fishMoveData = new(Allocator.Persistent);
-        
-        public EErrorCode SpawnFish(int fishID)
+
+        public EErrorCode RandomFish()
         {
-            //Check space
+            if (_coin < RandomFishCost)
+            {
+                return EErrorCode.Fish_NotEnoughCoin;
+            }
+
+            int randomFish = UserData.Instance.UnlockFish[Random.Range(0, UserData.Instance.UnlockFish.Length)];
+            FishConfig fishConfig = GameConfig.Instance.GetFishConfig(randomFish);
+            EErrorCode result = SpawnFish(fishConfig);
+            if (result == EErrorCode.OK)
+            {
+                _coin -= RandomFishCost;
+                _userExp += fishConfig.exp;
+            }
+            return result;
+        }
+
+        public EErrorCode BuyFish(int fishID)
+        {
+            FishConfig fishConfig = GameConfig.Instance.GetFishConfig(fishID);
+            if (_coin < fishConfig.price)
+            {
+                return EErrorCode.Fish_NotEnoughCoin;
+            }
+            
+            EErrorCode result = SpawnFish(fishConfig);
+            if (result == EErrorCode.OK)
+            {
+                _coin -= fishConfig.price;
+                _userExp += fishConfig.exp;
+            }
+            
+            return result;
+        }
+        
+        public EErrorCode SpawnFish(FishConfig fishConfig)
+        {
             if (_fishes.Count >= _tankCapacity)
             {
                 return EErrorCode.Fish_TankIsFull;
             }
             
-            //Check price
-            FishConfig fishConfig = GameConfig.Instance.GetFishConfig(fishID);
-            if (Coin < fishConfig.price)
-            {
-                return EErrorCode.Fish_NotEnoughCoin;
-            }
-            
             //Spawn
-            Fish newFish = FishPooling.Instance.Get(fishID);
-            if (!newFish)
-            {
-                return EErrorCode.InternalError;
-            }
-            Coin -= fishConfig.price;
+            Fish newFish = FishPooling.Instance.Get(fishConfig.id);
             
             //move fish
             Vector3 target = RandomPositionInTank(newFish.transform.position);
             FishMoveData moveData =
                 new FishMoveData(newFish.transform.position, target, Random.Range(1, 3f), GameController.GameTimer);
+            newFish.InitStat(fishConfig);
             newFish.SetSide(target);
+            newFish.ResetIncomeTimer(GameController.GameTimer);
+            newFish.gameObject.SetActive(true);
             
-            Exp += fishConfig.exp;
             FishCount += 1;
             
             _fishes.Add(newFish);
@@ -80,6 +108,13 @@ namespace GameScene.Game
                     _fishMoveData[i] = new FishMoveData(_fishMoveData[i].target, target,
                         Random.Range(1, 3f), GameController.GameTimer);
                 }
+
+                if (GameController.GameTimer >= _fishes[i].NextTimeIncomeReady)
+                {
+                    //collect
+                    CollectFishIncome(_fishes[i].Income);
+                    _fishes[i].ResetIncomeTimer(GameController.GameTimer);
+                }
             }
 
             job.fishCompleteMove.Dispose();
@@ -93,6 +128,16 @@ namespace GameScene.Game
                 Mathf.Clamp(Random.Range(currentPosition.y + 2, currentPosition.y - 2), _limitDown.position.y, _limitUp.position.y),
                 0
             );
+        }
+
+        private void CollectFishIncome(int income)
+        {
+            _coin += income;
+        }
+
+        private void OnDestroy()
+        {
+            _fishMoveData.Dispose();
         }
     }
     

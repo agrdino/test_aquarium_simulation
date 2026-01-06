@@ -1,30 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using Config;
+using Data;
 using Scripts.Helper;
+using Unity.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameScene.Game
 {
     public partial class TankController : Singleton<TankController>
     {
         //Stat
-        private float _coin;
         private int _fishCount;
         private int _tankCapacity;
-        private int _level;
-        private int _exp;
+        private int _tankLevel;
         
-        private LevelConfig _currentLevelConfig;
+        private TankConfig _tankConfig;
 
-        public float Coin
-        {
-            get => _coin;
-            set 
-            {
-                OnCoinChanged?.Invoke(value);
-                _coin = value;
-            }
-        }
 
         public int FishCount
         {
@@ -36,65 +29,57 @@ namespace GameScene.Game
             }
         }
 
-        public int TankCapacity
+        public int TankCapacity => _tankCapacity;
+
+        public int TankLevelUpPrice => _tankConfig.levelUpCost;
+
+        public int TankLevel
         {
-            get => _tankCapacity;
+            get  => _tankLevel;
             set
             {
-                _tankCapacity = value;
-            }
-        }
-
-        public int Level
-        {
-            get  => _level;
-            set
-            {
-                OnTankLevelUp?.Invoke(value, _currentLevelConfig.targetExp);
-                _level = value;
-            }
-        }
-
-        public int Exp
-        {
-            get => _exp;
-            set
-            {
-                _exp = value;
-
-                if (_exp >= _currentLevelConfig.targetExp)
-                {
-                    _exp -= _currentLevelConfig.targetExp;
-                    
-                    LevelConfig nextLevelConfig = GameConfig.Instance.GetLevelConfig(_level + 1);
-                    if (nextLevelConfig != null)
-                    {
-                        _currentLevelConfig = nextLevelConfig;
-                        Level += 1;
-                    }
-                }
-                
-                OnReceiveExp?.Invoke(_exp);
+                _tankLevel = value;
+                _tankCapacity = (int)(_tankConfig.tankCapacity * Mathf.Pow(_tankLevel, 1.5f));
+                OnTankLevelUp?.Invoke(value);
             }
         }
         
+        public int TankMaxLevel => _tankConfig.maxLevel;
+
+        private int _coin
+        {
+            get => UserData.Instance.Coin;
+            set => UserData.Instance.Coin = value;
+        }
+
+        private int _userExp
+        {
+            get => UserData.Instance.UserExp;
+            set => UserData.Instance.UserExp = value;
+        }
+        
         //Event
-        public event Action<float> OnCoinChanged;
         public event Action<int, int> OnNewFishSpawned;
-        public event Action<int, int> OnTankLevelUp;
-        public event Action<int> OnReceiveExp;
+        public event Action<int> OnTankLevelUp;
         
         //Limit
         [SerializeField] private Transform _limitLeft, _limitRight, _limitUp, _limitDown;
         
-        public void InitStat(int coin, int tankCapacity, int level)
+        public void InitStat(int startFish, TankConfig tankConfig, int tankLevel)
         {
-            Coin = coin;
-            TankCapacity = tankCapacity;
-            _currentLevelConfig = GameConfig.Instance.GetLevelConfig(level);
+            _fishes = new List<Fish>();
+            _fishMoveData = new(Allocator.Persistent);
+
+            _tankConfig = tankConfig;
+            TankLevel = tankLevel;
             
-            Level = level; 
-            Exp = 0;
+            int[] unlockFish = UserData.Instance.UnlockFish;
+            for (int i = 0; i < startFish; i++)
+            {
+                int randomFish = unlockFish[Random.Range(0, unlockFish.Length)];
+                FishConfig fishConfig = GameConfig.Instance.GetFishConfig(randomFish);
+                SpawnFish(fishConfig);
+            }
         }
     }
 }

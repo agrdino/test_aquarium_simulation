@@ -19,6 +19,8 @@ namespace GameScene.Game
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
+            
             _gameState = EGameState.Playing;
         }
 

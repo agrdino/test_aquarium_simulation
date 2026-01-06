@@ -15,8 +15,9 @@ MonoBehaviour:
   _tankConfigs:
   - _id: 1
     _name: 
+    _avatar: {fileID: 0}
     _prefab: {fileID: 8533827057344221977, guid: bbee2f26adca78b42b2aad06b4cc2057, type: 3}
     _unlockLevel: 0
     _price: 0
     width: 0
-    tankCapacity: 5
+    tankCapacity: 100
