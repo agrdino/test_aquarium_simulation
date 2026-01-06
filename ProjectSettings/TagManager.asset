@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -41,3 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Tank
+    uniqueID: 32380021
+    locked: 0
+  - name: DecorBehind
+    uniqueID: 2772414887
+    locked: 0
+  - name: Fish
+    uniqueID: 3476451805
+    locked: 0
+  - name: DecorFront
+    uniqueID: 3550055411
+    locked: 0
+  m_RenderingLayers:
+  - Default
