@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Config;
 using Data;
+using Fx;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -16,7 +16,7 @@ namespace GameScene.Game
         public const int RandomFishCost = 10;
         
         private List<Fish> _fishes = new();
-        private NativeList<FishMoveData> _fishMoveData = new(Allocator.Persistent);
+        private NativeList<FishMoveData> _fishMoveData;
 
         public EErrorCode RandomFish()
         {
@@ -112,7 +112,7 @@ namespace GameScene.Game
                 if (GameController.GameTimer >= _fishes[i].NextTimeIncomeReady)
                 {
                     //collect
-                    CollectFishIncome(_fishes[i].Income);
+                    CollectFishIncome(_fishes[i]);
                     _fishes[i].ResetIncomeTimer(GameController.GameTimer);
                 }
             }
@@ -126,13 +126,14 @@ namespace GameScene.Game
             return new Vector3(
                 Random.Range(_limitLeft.position.x, _limitRight.position.x),
                 Mathf.Clamp(Random.Range(currentPosition.y + 2, currentPosition.y - 2), _limitDown.position.y, _limitUp.position.y),
-                0
+                Random.Range(0, 1f)
             );
         }
 
-        private void CollectFishIncome(int income)
+        private void CollectFishIncome(Fish fish)
         {
-            _coin += income;
+            _coin += fish.Income;
+            FxController.Instance.ShowCollectCoinFx(fish.transform.position);
         }
 
         private void OnDestroy()

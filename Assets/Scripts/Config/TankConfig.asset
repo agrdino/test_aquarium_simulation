@@ -20,4 +20,6 @@ MonoBehaviour:
     _unlockLevel: 0
     _price: 0
     width: 0
-    tankCapacity: 100
+    tankCapacity: 15
+    levelUpCost: 1000
+    maxLevel: 5

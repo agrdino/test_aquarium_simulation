@@ -43,13 +43,18 @@ namespace GameScene.UI
             _scroller.ReloadData();
         }
 
-        private void UpdateData(List<(FishConfig fishConfig, int unlockLevel)> fishData)
+        public void UpdateData(List<(FishConfig fishConfig, int unlockLevel)> fishData)
         {
             _fishData = fishData;
 
             for (var i = 0; i < _fishData.Count; i++)
             {
-                (_scroller.GetCellViewAtDataIndex(i) as MarketItem).ShowItem(_fishData[i].fishConfig, _fishData[i].unlockLevel, _onSelectFish);
+                EnhancedScrollerCellView cellView = _scroller.GetCellViewAtDataIndex(i);
+                if (cellView == null)
+                {
+                    continue;
+                }
+                (cellView as MarketItem)?.ShowItem(_fishData[i].fishConfig, _fishData[i].unlockLevel, _onSelectFish);
             }
         }
 

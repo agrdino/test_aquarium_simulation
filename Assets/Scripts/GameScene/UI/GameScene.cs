@@ -22,6 +22,8 @@ namespace GameScene.UI
         [SerializeField] private TextMeshProUGUI _txtLevelUpTankPrice;
 
         [SerializeField] private FishMarketScroller _fishMarketScroller;
+
+        [SerializeField] private Toast _pnlToast;
         
         //pnl tank infor
         [Space]
@@ -59,6 +61,8 @@ namespace GameScene.UI
             _tankController.OnNewFishSpawned += OnFishChanged;
             
             _tankController.InitStat(GameConfig.Instance.StartFish, tankConfig, 1);
+            
+            _txtCoin.SetText(UserData.Instance.Coin.ToString());
         }
 
         #endregion
@@ -67,7 +71,11 @@ namespace GameScene.UI
 
         private void OnClickButtonTank()
         {
-            _tankController.LevelUpTank();
+            EErrorCode code = _tankController.LevelUpTank();
+            if (code != EErrorCode.OK)
+            {
+                _pnlToast.ShowToast(code.ToString());
+            }
         }
 
         private void OnClickButtonDecor()
@@ -136,7 +144,7 @@ namespace GameScene.UI
                     return (x, unlockFish.Contains(x.id) ? 0 : x.unlockLevel);
                 }).ToList();
             
-                _fishMarketScroller.ShowItem(fishData, RandomFish, BuyFish);
+                _fishMarketScroller.UpdateData(fishData);
             }
         }
 
@@ -146,12 +154,20 @@ namespace GameScene.UI
 
         private void RandomFish()
         {
-            _tankController.RandomFish();
+            EErrorCode code = _tankController.RandomFish();
+            if (code != EErrorCode.OK)
+            {
+                _pnlToast.ShowToast(code.ToString());
+            }
         }
 
         private void BuyFish(int fishID)
         {
-            _tankController.BuyFish(fishID);
+            EErrorCode code = _tankController.BuyFish(fishID);
+            if (code != EErrorCode.OK)
+            {
+                _pnlToast.ShowToast(code.ToString());
+            }
         }
 
         #endregion

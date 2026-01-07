@@ -7,3 +7,8 @@
     Tank_NotEnoughCoin,
     Tank_MaxLevel,
 }
+
+public enum EFxType
+{
+    Coin,
+}
